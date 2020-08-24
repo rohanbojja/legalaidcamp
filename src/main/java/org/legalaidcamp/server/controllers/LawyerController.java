@@ -1,8 +1,13 @@
 package org.legalaidcamp.server.controllers;
 
+import com.google.firebase.auth.FirebaseAuthException;
 import org.legalaidcamp.server.models.Lawyer;
+import org.legalaidcamp.server.models.LawyerData;
 import org.legalaidcamp.server.repositories.LawyerRepository;
+import org.legalaidcamp.server.services.AuthenticationService;
+import org.legalaidcamp.server.services.LawyerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 //TODO: Impl auth
@@ -11,7 +16,13 @@ import org.springframework.web.bind.annotation.*;
 public class LawyerController {
 
     @Autowired
+    AuthenticationService authenticationService;
+
+    @Autowired
     LawyerRepository lawyerRepository;
+
+    @Autowired
+    LawyerService lawyerService;
 
     /*
     TODO:
@@ -21,9 +32,15 @@ public class LawyerController {
     1. Create a Lawyer entry if it doesn't already exist for the uid passed
      */
     @PostMapping("/lawyers")
-    public Lawyer createLawyer(@RequestBody final Lawyer lawyer) {
-        Lawyer createdLawyer = lawyerRepository.saveAndFlush(lawyer);
-        return createdLawyer;
+    public ResponseEntity<Lawyer> createLawyer(@RequestHeader("idToken") String idToken, @RequestBody final LawyerData lawyerData) throws FirebaseAuthException {
+
+        try {
+            String uid = authenticationService.getUid(idToken);
+            return ResponseEntity.ok(lawyerService.createLawyer(uid, lawyerData).orElseThrow());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/lawyers")

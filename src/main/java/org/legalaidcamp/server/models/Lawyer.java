@@ -2,13 +2,18 @@ package org.legalaidcamp.server.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 //TODO: WIP
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Lawyer {
     @Id
     String uid;
@@ -29,12 +34,31 @@ public class Lawyer {
     Boolean profileStatus;
     Boolean isVerified;
 
-    @JsonIgnore
-    @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(nullable = false)
-    User user;
+    @Column(name = "created_date", nullable = false, updatable = false)
+    @CreatedDate
+    private Date createdDate;
+
+    @Column(name = "modified_date")
+    @LastModifiedDate
+    private Date modifiedDate;
 
     public Lawyer() {
+    }
+
+    public Lawyer(String uid, Set<Language> languages, Long stateOfPractice, String city, Long barCouncil, List<AreaOfLaw> areasOfLaw, Long gender, String officeAddress, String officePincode, Boolean allowCalls, Boolean allowVisits, Boolean profileStatus, Boolean isVerified) {
+        this.uid = uid;
+        this.languages = languages;
+        this.stateOfPractice = stateOfPractice;
+        this.city = city;
+        this.barCouncil = barCouncil;
+        this.areasOfLaw = areasOfLaw;
+        this.gender = gender;
+        this.officeAddress = officeAddress;
+        this.officePincode = officePincode;
+        this.allowCalls = allowCalls;
+        this.allowVisits = allowVisits;
+        this.profileStatus = profileStatus;
+        this.isVerified = isVerified;
     }
 
     public String getUid() {
@@ -142,11 +166,20 @@ public class Lawyer {
         isVerified = verified;
     }
 
-    public User getUser() {
-        return user;
+
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 }

@@ -12,14 +12,14 @@ import java.util.List;
 public class AuthenticationServiceImpl implements AuthenticationService{
 
     @Override
-    public String getUid(String idToken) {
+    public String getUid(String idToken) throws IllegalArgumentException,FirebaseAuthException{
         FirebaseToken decodedToken;
         try {
             decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
             return decodedToken.getUid();
-        } catch (FirebaseAuthException e) {
+        } catch (FirebaseAuthException | IllegalArgumentException e) {
             e.printStackTrace();
-            return "";
+            throw e;
         }
     }
 

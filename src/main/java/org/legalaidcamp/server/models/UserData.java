@@ -9,6 +9,13 @@ public class UserData {
     public UserData() {
     }
 
+    public UserData(String displayName, String emailAddress, String phoneNumber, String photoUrl) {
+        this.displayName = displayName;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
+        this.photoUrl = photoUrl;
+    }
+
     public String getDisplayName() {
         return displayName;
     }

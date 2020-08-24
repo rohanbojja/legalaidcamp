@@ -3,11 +3,14 @@ package org.legalaidcamp.server.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Date;
 
 //TODO: WIP
 @Entity(name = "users")
+@EntityListeners(AuditingEntityListener.class)
 public class User {
     @Id
     String uid;
@@ -20,28 +23,17 @@ public class User {
 
     String photoUrl;
 
-    @JsonIgnore
-    @OneToOne(targetEntity = Lawyer.class, mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    Lawyer lawyer;
-
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreatedDate
-    private Integer createdDate;
+    private Date createdDate;
 
     @Column(name = "modified_date")
     @LastModifiedDate
-    private Integer modifiedDate;
+    private Date modifiedDate;
 
     public User() {
     }
 
-    public Lawyer getLawyer() {
-        return lawyer;
-    }
-
-    public void setLawyer(Lawyer lawyer) {
-        this.lawyer = lawyer;
-    }
 
     public String getUid() {
         return uid;
@@ -83,19 +75,19 @@ public class User {
         this.photoUrl = photoUrl;
     }
 
-    public Integer getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Integer createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Integer getModifiedDate() {
+    public Date getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(Integer modifiedDate) {
+    public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 }
