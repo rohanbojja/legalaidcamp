@@ -4,9 +4,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import org.legalaidcamp.server.models.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AuthenticationServiceImpl implements AuthenticationService{
 
     @Override
