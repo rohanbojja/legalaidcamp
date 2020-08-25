@@ -1,8 +1,9 @@
 package org.legalaidcamp.server.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "areasoflaw")
 public class AreaOfLaw {
@@ -11,7 +12,22 @@ public class AreaOfLaw {
     @Column(name = "areaoflaw", unique = true)
     String areaOfLaw;
 
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "areasOfLaw", cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    List<Lawyer> lawyers;
+
     public AreaOfLaw() {
+    }
+
+    public List<Lawyer> getLawyers() {
+        return lawyers;
+    }
+
+    public void setLawyers(List<Lawyer> lawyers) {
+        this.lawyers = lawyers;
     }
 
     public AreaOfLaw(String areaOfLaw) {
@@ -33,4 +49,5 @@ public class AreaOfLaw {
     public void setAreaOfLaw(String areaOfLaw) {
         this.areaOfLaw = areaOfLaw;
     }
+
 }

@@ -79,14 +79,14 @@ class ServerApplicationTests {
 	}
 
 	@Test
-	void createUserAndApplyForLawyer(){
+	void createUserAndApplyForLawyerTest(){
 		UserData userData = new UserData("Rohan Bojja", "rohanbojja@gmail.com", "90302", "yourMom.jpeg");
 		//Assign values or initialize
 		String uid = "696969";
 		User user = userService.createUser(uid,userData);
 		assertThat(user.getUid()).isSameAs(uid);
 		assertThat(user.getDisplayName()).isSameAs(userData.getDisplayName());
-		List<Long> longs = new ArrayList<>();
+		Set<Long> longs = new HashSet<>();
 		longs.add(1L);
 		longs.add(2L);
 		LawyerData lawyerData = new LawyerData(longs,0L,"Address","500036",true,true,true, longs, 2L,"Hyderabad", 2L);

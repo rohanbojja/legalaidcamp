@@ -1,14 +1,12 @@
 package org.legalaidcamp.server.models;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 //TODO: WIP
@@ -17,15 +15,22 @@ import java.util.Set;
 public class Lawyer {
     @Id
     String uid;
+
     @Column(unique = true, nullable = false)
-    @ManyToMany
+    @ManyToMany(targetEntity = Language.class)
     Set<Language> languages;
-    Long stateOfPractice;
+
+    @ManyToOne(targetEntity = State.class)
+    State stateOfPractice;
     String city;
-    Long barCouncil;
+
+    @ManyToOne(targetEntity = BarCouncil.class)
+    BarCouncil barCouncil;
+
     @Column(unique = true, nullable = false)
     @ManyToMany(targetEntity = AreaOfLaw.class)
-    List<AreaOfLaw> areasOfLaw;
+    Set<AreaOfLaw> areasOfLaw;
+
     Long gender;
     String officeAddress;
     String officePincode;
@@ -45,7 +50,7 @@ public class Lawyer {
     public Lawyer() {
     }
 
-    public Lawyer(String uid, Set<Language> languages, Long stateOfPractice, String city, Long barCouncil, List<AreaOfLaw> areasOfLaw, Long gender, String officeAddress, String officePincode, Boolean allowCalls, Boolean allowVisits, Boolean profileStatus, Boolean isVerified) {
+    public Lawyer(String uid, Set<Language> languages, State stateOfPractice, String city, BarCouncil barCouncil, Set<AreaOfLaw> areasOfLaw, Long gender, String officeAddress, String officePincode, Boolean allowCalls, Boolean allowVisits, Boolean profileStatus, Boolean isVerified) {
         this.uid = uid;
         this.languages = languages;
         this.stateOfPractice = stateOfPractice;
@@ -70,14 +75,6 @@ public class Lawyer {
     }
 
 
-    public Long getStateOfPractice() {
-        return stateOfPractice;
-    }
-
-    public void setStateOfPractice(Long stateOfPractice) {
-        this.stateOfPractice = stateOfPractice;
-    }
-
     public String getCity() {
         return city;
     }
@@ -86,13 +83,6 @@ public class Lawyer {
         this.city = city;
     }
 
-    public Long getBarCouncil() {
-        return barCouncil;
-    }
-
-    public void setBarCouncil(Long barCouncil) {
-        this.barCouncil = barCouncil;
-    }
 
     public Set<Language> getLanguages() {
         return languages;
@@ -102,11 +92,11 @@ public class Lawyer {
         this.languages = languages;
     }
 
-    public List<AreaOfLaw> getAreasOfLaw() {
+    public Set<AreaOfLaw> getAreasOfLaw() {
         return areasOfLaw;
     }
 
-    public void setAreasOfLaw(List<AreaOfLaw> areasOfLaw) {
+    public void setAreasOfLaw(Set<AreaOfLaw> areasOfLaw) {
         this.areasOfLaw = areasOfLaw;
     }
 
@@ -181,5 +171,21 @@ public class Lawyer {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public State getStateOfPractice() {
+        return stateOfPractice;
+    }
+
+    public void setStateOfPractice(State stateOfPractice) {
+        this.stateOfPractice = stateOfPractice;
+    }
+
+    public BarCouncil getBarCouncil() {
+        return barCouncil;
+    }
+
+    public void setBarCouncil(BarCouncil barCouncil) {
+        this.barCouncil = barCouncil;
     }
 }

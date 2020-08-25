@@ -1,17 +1,30 @@
 package org.legalaidcamp.server.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "barcouncils")
 public class BarCouncil {
     @Id
     Long id;
+
     @Column(unique = true, name = "barcouncil")
     String barCouncilName;
+    @JsonIgnore
+    @OneToMany(mappedBy = "barCouncil", fetch = FetchType.LAZY)
+    List<Lawyer> lawyers;
 
     public BarCouncil() {
+    }
+
+    public List<Lawyer> getLawyers() {
+        return lawyers;
+    }
+
+    public void setLawyers(List<Lawyer> lawyers) {
+        this.lawyers = lawyers;
     }
 
     public BarCouncil(String barCouncilName) {

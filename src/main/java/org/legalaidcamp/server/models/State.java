@@ -1,17 +1,24 @@
 package org.legalaidcamp.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "states")
 public class State {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    @Column(name = "state")
+    @Column(name = "state", unique = true)
     String stateName;
 
     @Column(name = "type")
     String type;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "stateOfPractice")
+    Set<Lawyer> lawyers;
 
     public State() {
     }
@@ -19,6 +26,14 @@ public class State {
     public State(String stateName, String type) {
         this.stateName = stateName;
         this.type = type;
+    }
+
+    public Set<Lawyer> getLawyers() {
+        return lawyers;
+    }
+
+    public void setLawyers(Set<Lawyer> lawyers) {
+        this.lawyers = lawyers;
     }
 
     public Long getId() {

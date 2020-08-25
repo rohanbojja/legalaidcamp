@@ -36,7 +36,9 @@ public class LawyerController {
 
         try {
             String uid = authenticationService.getUid(idToken);
-            return ResponseEntity.ok(lawyerService.createLawyer(uid, lawyerData).orElseThrow());
+            return lawyerService.createLawyer(uid, lawyerData).map(
+                    value -> ResponseEntity.ok().body(value)
+            ).orElse(ResponseEntity.badRequest().build());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
@@ -47,6 +49,16 @@ public class LawyerController {
     public Iterable<Lawyer> lawyers() {
         //TODO: Check custom claim and allow only if admin
         return lawyerRepository.findAll();
+    }
+
+    @GetMapping("/lawyers/{id}")
+    public ResponseEntity<Lawyer> getLawyerProfile(@PathVariable final String uid) {
+        /*
+        Public page for lawyers
+         */
+        return lawyerRepository.findById(uid).map(
+                value -> ResponseEntity.ok().body(value)
+        ).orElse(ResponseEntity.notFound().build());
     }
 
 }

@@ -1,16 +1,17 @@
 package org.legalaidcamp.server.models;
 
 import java.util.List;
+import java.util.Set;
 
 public class LawyerData {
-    List<Long> areasOfLaw;
+    Set<Long> areasOfLaw;
     Long gender;
     String officeAddress;
     String officePincode;
     Boolean allowCalls;
     Boolean allowVisits;
     Boolean profileStatus;
-    List<Long> languages;
+    Set<Long> languages;
     Long stateOfPractice;
     String city;
     Long barCouncil;
@@ -18,7 +19,7 @@ public class LawyerData {
     public LawyerData() {
     }
 
-    public LawyerData(List<Long> areasOfLaw, Long gender, String officeAddress, String officePincode, Boolean allowCalls, Boolean allowVisits, Boolean profileStatus, List<Long> languages, Long stateOfPractice, String city, Long barCouncil) {
+    public LawyerData(Set<Long> areasOfLaw, Long gender, String officeAddress, String officePincode, Boolean allowCalls, Boolean allowVisits, Boolean profileStatus, Set<Long> languages, Long stateOfPractice, String city, Long barCouncil) {
         this.areasOfLaw = areasOfLaw;
         this.gender = gender;
         this.officeAddress = officeAddress;
@@ -32,19 +33,19 @@ public class LawyerData {
         this.barCouncil = barCouncil;
     }
 
-    public List<Long> getAreasOfLaw() {
+    public Set<Long> getAreasOfLaw() {
         return areasOfLaw;
     }
 
-    public void setAreasOfLaw(List<Long> areasOfLaw) {
+    public void setAreasOfLaw(Set<Long> areasOfLaw) {
         this.areasOfLaw = areasOfLaw;
     }
 
-    public List<Long> getLanguages() {
+    public Set<Long> getLanguages() {
         return languages;
     }
 
-    public void setLanguages(List<Long> languages) {
+    public void setLanguages(Set<Long> languages) {
         this.languages = languages;
     }
 
