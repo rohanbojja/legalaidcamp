@@ -1,5 +1,7 @@
 package org.legalaidcamp.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class CourtCase {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
+    @JsonIgnore
     @ManyToOne
     User user;
 
@@ -29,7 +32,7 @@ public class CourtCase {
     @ManyToOne
     Lawyer activeLawyer;
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     List<Lawyer> assignedLawyers;
 
     public CourtCase() {

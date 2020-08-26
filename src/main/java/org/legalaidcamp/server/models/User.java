@@ -7,6 +7,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 //TODO: WIP
 @Entity(name = "users")
@@ -23,6 +25,10 @@ public class User {
 
     String photoUrl;
 
+    @JsonIgnore
+    @OneToMany(targetEntity = CourtCase.class, mappedBy = "user")
+    Set<CourtCase> courtCaseList;
+
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreatedDate
     private Date createdDate;
@@ -34,6 +40,14 @@ public class User {
     public User() {
     }
 
+
+    public Set<CourtCase> getCourtCaseList() {
+        return courtCaseList;
+    }
+
+    public void setCourtCaseList(Set<CourtCase> courtCaseList) {
+        this.courtCaseList = courtCaseList;
+    }
 
     public String getUid() {
         return uid;

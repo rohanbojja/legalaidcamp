@@ -14,7 +14,7 @@ Swagger docs at http://localhost:8000/swagger-ui.html
 
 ### Status:
 🥚 - Not Implemented
-🐣 - WIP
+🐣 - Possibly bugged
 🐥 - Working
 
 | Services           	| Status 	|
@@ -22,8 +22,10 @@ Swagger docs at http://localhost:8000/swagger-ui.html
 | Create a user      	| 🐥      	|
 | Retrieve form data 	| 🐥      	|
 | Basic Auth         	| 🐥      	|
-| Create a lawyer    	| 🐣      	|
-| CRUD on cases      	| 🥚      	|
+| Create a lawyer    	| 🐥      	|
 | Custom auth roles  	| 🥚      	|
-| Create a case      	| 🥚      	|
+| Assign lawyers        | 🐣      	|
+| Accept a case      	| 🥚      	|
+| Create a case      	| 🐣      	|
+| View case details     | 🐥      	|
 | Everything else    	| 🥚      	|

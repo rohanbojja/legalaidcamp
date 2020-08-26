@@ -54,7 +54,7 @@ public class LawyerController {
     @GetMapping("/lawyers/{id}")
     public ResponseEntity<Lawyer> getLawyerProfile(@PathVariable final String uid) {
         /*
-        Public page for lawyers
+        Public DETAILS for lawyers
          */
         return lawyerRepository.findById(uid).map(
                 value -> ResponseEntity.ok().body(value)

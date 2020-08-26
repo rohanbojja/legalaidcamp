@@ -1,6 +1,7 @@
 package org.legalaidcamp.server.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -30,6 +31,14 @@ public class Lawyer {
     @Column(unique = true, nullable = false)
     @ManyToMany(targetEntity = AreaOfLaw.class)
     Set<AreaOfLaw> areasOfLaw;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "activeLawyer")
+    Set<CourtCase> activeCases;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "assignedLawyers", fetch = FetchType.EAGER)
+    Set<CourtCase> assignedCases;
 
     Long gender;
     String officeAddress;
@@ -64,6 +73,22 @@ public class Lawyer {
         this.allowVisits = allowVisits;
         this.profileStatus = profileStatus;
         this.isVerified = isVerified;
+    }
+
+    public Set<CourtCase> getActiveCases() {
+        return activeCases;
+    }
+
+    public void setActiveCases(Set<CourtCase> activeCases) {
+        this.activeCases = activeCases;
+    }
+
+    public Set<CourtCase> getAssignedCases() {
+        return assignedCases;
+    }
+
+    public void setAssignedCases(Set<CourtCase> assignedCases) {
+        this.assignedCases = assignedCases;
     }
 
     public String getUid() {
