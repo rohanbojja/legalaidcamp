@@ -44,8 +44,8 @@ public class LawyerServiceImpl implements LawyerService{
 
                         Set<AreaOfLaw> areaOfLaws = new HashSet<>(areaOfLawRepository.findAllById(lawyerData.getAreasOfLaw()));
                         Set<Language> languages = new HashSet<>(languageRepository.findAllById(lawyerData.getLanguages()));
-                        State state = stateRepository.findById(lawyerData.getStateOfPractice()).orElse(null);
-                        BarCouncil barCouncil = barCouncilRepository.findById(lawyerData.getBarCouncil()).orElse(null);
+                        State state = stateRepository.findById(lawyerData.getStateOfPractice()).orElseThrow();
+                        BarCouncil barCouncil = barCouncilRepository.findById(lawyerData.getBarCouncil()).orElseThrow();
                         Lawyer createdLawyer = new Lawyer(uid, languages, state, lawyerData.getCity(), barCouncil, areaOfLaws,
                                 lawyerData.getGender(), lawyerData.getOfficeAddress(), lawyerData.getOfficePincode(), lawyerData.getAllowCalls(),
                                 lawyerData.getAllowVisits(), true, false);
@@ -56,6 +56,20 @@ public class LawyerServiceImpl implements LawyerService{
                     }
                 }
         ).orElseThrow());
+    }
+
+    @Override
+    public void toggleVerification(String uid) {
+        lawyerRepository.findById(uid).ifPresentOrElse(
+                value -> {
+                    value.setVerified(!value.getVerified());
+                    lawyerRepository.saveAndFlush(value);
+        },() -> {
+                    /*
+                    Throw lawyer not found error
+                     */
+                }
+        );
     }
 
     @Override

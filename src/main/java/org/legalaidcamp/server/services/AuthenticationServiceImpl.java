@@ -19,6 +19,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     public String getUid(String idToken) throws IllegalArgumentException,FirebaseAuthException{
         /*
         TODO: Remove "dev" in production!
+
+        IMP
+
          */
         if(idToken.length()<6){
             return idToken;
@@ -36,14 +39,24 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     @Override
     public Boolean isAdmin(String idToken) {
-        FirebaseToken decodedToken;
-        try {
-            return Boolean.TRUE.equals(FirebaseAuth.getInstance().verifyIdToken(idToken).getClaims().get("admin"));
 
-        } catch (FirebaseAuthException e) {
-            e.printStackTrace();
-            return false;
-        }
+
+
+        return true;
+
+        /*
+        TODO
+        Uncomment the code below for prod.
+         */
+
+//        FirebaseToken decodedToken;
+//        try {
+//            return Boolean.TRUE.equals(FirebaseAuth.getInstance().verifyIdToken(idToken).getClaims().get("admin"));
+//
+//        } catch (FirebaseAuthException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
     }
 
     @Override

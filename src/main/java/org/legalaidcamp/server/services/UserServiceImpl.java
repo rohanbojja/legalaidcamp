@@ -1,5 +1,7 @@
 package org.legalaidcamp.server.services;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.legalaidcamp.server.models.*;
@@ -12,8 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.lang.reflect.InaccessibleObjectException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,13 +36,13 @@ public class UserServiceImpl implements UserService {
         -> Write a better method. This is garbage
          */
         CourtCase courtCase = new CourtCase();
-        return userRepository.findById(courtCaseData.getUid()).map(
+        return userRepository.findById(uid).map(
                 value -> {
                     logger.info("Assigned user to the case.");
                     courtCase.setUser(value);
                     stateRepository.findById(courtCaseData.getState()).ifPresentOrElse(
                             state -> {
-                                logger.info("Assigning location: "+courtCaseData.getState()+" "+courtCaseData.getCity());
+                                logger.info("Assigning location: " + courtCaseData.getState() + " " + courtCaseData.getCity());
                                 Pageable pageable = PageRequest.of(0, 3);
                                 Page<Lawyer> lawyerList = lawyerRepository.findByStateOfPractice(state, pageable);
                                 courtCase.setAreaOfLaw(courtCaseData.getAreaOfLaw());
@@ -77,7 +77,23 @@ public class UserServiceImpl implements UserService {
         if (userData.getDisplayName().length() > 0 && userData.getDisplayName().length() < 50) {
             user.setDisplayName(userData.getDisplayName());
             user.setEmailAddress(userData.getEmailAddress());
-            user.setPhoneNumber(userData.getPhoneNumber());
+            /*
+                TODO:
+                Discard the phone number in UserData and retrieve it from Firebase.
+                -> Uncomment the code below and get rid of phoneNumber from userData.
+             */
+
+            if (uid.length() >= 6) {
+                try {
+                    user.setPhoneNumber(FirebaseAuth.getInstance().getUser(uid).getPhoneNumber());
+                } catch (FirebaseAuthException e) {
+                    e.printStackTrace();
+                }
+
+
+            } else {
+                user.setPhoneNumber(userData.getPhoneNumber());
+            }
             user.setPhotoUrl(userData.getPhotoUrl());
             user.setUid(uid);
             return userRepository.saveAndFlush(user);

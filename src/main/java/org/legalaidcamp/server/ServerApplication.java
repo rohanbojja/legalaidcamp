@@ -35,8 +35,14 @@ public class ServerApplication implements CommandLineRunner {
     //TODO: Command line runner to populate the DB for dev;
     @Override
     public void run(String... args) throws Exception {
+
+        /*
+        TEST DATA
+        TODO:
+        -> Remove in prod
+         */
         logger.info("Populating users/lawyers");
-        for(int i=1;i<11;i++){
+        for(int i=1;i<3;i++){
             UserData userData = new UserData(utilityService.getRandomString(3)+" USER", "rohanbojja@gmail.com", "90302", "yourMom.jpeg");
             //Assign values or initialize
             String uid = utilityService.getRandomString(6);
@@ -50,7 +56,7 @@ public class ServerApplication implements CommandLineRunner {
 
         logger.info("DONE");
         logger.info("Popuylating with users/cases");
-        for(int i=1;i<11;i++){
+        for(int i=1;i<3;i++){
             UserData userData = new UserData(utilityService.getRandomString(3)+"Client", "sd@gmail.com", "90302", "asdasd.jpeg");
             //Assign values or initialize
             String uid = utilityService.getRandomString(6);
@@ -60,6 +66,7 @@ public class ServerApplication implements CommandLineRunner {
             CourtCaseData courtCaseData = new CourtCaseData("A offended me.", 2L, "Meerut", (long) i, 7L, 0L,uid);
             CourtCase courtCase = userService.createCase(uid, courtCaseData);
         }
+
 
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 public class AreaOfLaw {
     @Id
     Long id;
+
     @Column(name = "areaoflaw", unique = true)
     String areaOfLaw;
 

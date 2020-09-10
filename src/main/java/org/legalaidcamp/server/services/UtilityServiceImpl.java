@@ -9,6 +9,6 @@ public class UtilityServiceImpl  implements UtilityService{
     public String getRandomString(Integer length) {
         boolean useLetters = true;
         boolean useNumbers = false;
-        return RandomStringUtils.random(length, useLetters, useNumbers);
+        return RandomStringUtils.random(length-1, useLetters, useNumbers);
     }
 }

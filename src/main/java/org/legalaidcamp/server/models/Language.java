@@ -20,6 +20,8 @@ public class Language {
     public Language() {
     }
 
+
+
     public Set<Lawyer> getLawyers() {
         return lawyers;
     }

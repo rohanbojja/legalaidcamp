@@ -13,14 +13,12 @@ public class CourtCase {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @JsonIgnore
     @ManyToOne
     User user;
 
     String description;
 
     Long areaOfLaw;
-
     String city;
 
     Long state;

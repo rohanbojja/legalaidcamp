@@ -16,6 +16,7 @@ public class BarCouncil {
     @OneToMany(mappedBy = "barCouncil", fetch = FetchType.LAZY)
     List<Lawyer> lawyers;
 
+
     public BarCouncil() {
     }
 

@@ -9,6 +9,9 @@ import java.util.Optional;
 
 public interface LawyerService {
     Optional<Lawyer> createLawyer(String uid, LawyerData lawyerData);
+    void toggleVerification(String uid);
+
     Lawyer deleteLawyer(String uid);
+
     List<CourtCase> assignedCases(String uid);
 }

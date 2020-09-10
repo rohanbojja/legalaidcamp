@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Set;
 
 //TODO: WIP
@@ -73,6 +74,20 @@ public class Lawyer {
         this.allowVisits = allowVisits;
         this.profileStatus = profileStatus;
         this.isVerified = isVerified;
+    }
+
+    public String listLanguages(){
+        /*
+        Convert List<Language> -> concatenated string.
+        TODO: Very primitive
+         */
+        String languages = "";
+        Iterator<Language> languageIterator = this.getLanguages().iterator();
+        while(languageIterator.hasNext()){
+            languages += languageIterator.next().languageName+", ";
+        }
+        languages = languages.substring(0,languages.length()-2);
+        return languages;
     }
 
     public Set<CourtCase> getActiveCases() {

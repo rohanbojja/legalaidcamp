@@ -1,5 +1,7 @@
 package org.legalaidcamp.server.models;
 
+import java.util.Objects;
+
 public class UserData {
     String displayName;
     String emailAddress;
@@ -47,4 +49,5 @@ public class UserData {
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
+
 }
